@@ -20,6 +20,7 @@ public class ExecutionTimeMethodService {
     @Async
     @Transactional
     public void saveExecutionTime(String methodName, Long timeTaken) {
+        log.info("Saving execution time for method: {}", methodName);
         methodRepository.save(ExecutionTimeMethod.builder()
                 .methodName(methodName)
                 .createdAt(ZonedDateTime.now())
