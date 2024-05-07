@@ -20,6 +20,7 @@ import ru.ob11to.methodexecution.dto.StudentReadDto;
 import ru.ob11to.methodexecution.service.StudentService;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,7 +41,11 @@ public class StudentController {
     @Operation(summary = "Получить всех студентов")
     @GetMapping
     public ResponseEntity<List<StudentReadDto>> findAll() {
-        return ResponseEntity.ok(studentService.findAll());
+        try {
+            return ResponseEntity.ok(studentService.findAll().get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -2,8 +2,11 @@ package ru.ob11to.methodexecution.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.ob11to.methodexecution.annotation.TrackAsyncTime;
+import ru.ob11to.methodexecution.annotation.TrackTime;
 import ru.ob11to.methodexecution.dto.StudentCreateDto;
 import ru.ob11to.methodexecution.dto.StudentReadDto;
 import ru.ob11to.methodexecution.mapper.StudentMapper;
@@ -11,6 +14,7 @@ import ru.ob11to.methodexecution.repository.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static java.util.stream.Collectors.toList;
 
@@ -22,6 +26,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
 
+    @TrackTime
     @Transactional
     public Optional<StudentReadDto> findById(Long id) {
         log.info("Get student with id : {}", id);
@@ -29,12 +34,14 @@ public class StudentService {
                 .map(studentMapper::toDto);
     }
 
+    @TrackAsyncTime
     @Transactional
-    public List<StudentReadDto> findAll() {
+    @Async
+    public CompletableFuture<List<StudentReadDto>> findAll() {
         log.info("Get all students");
-        return studentRepository.findAll().stream()
+        return CompletableFuture.completedFuture(studentRepository.findAll().stream()
                 .map(studentMapper::toDto)
-                .collect(toList());
+                .collect(toList()));
     }
 
     @Transactional
