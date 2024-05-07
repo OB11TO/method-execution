@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ob11to.methodexecution.dto.StudentCreateDto;
 import ru.ob11to.methodexecution.dto.StudentReadDto;
-import ru.ob11to.methodexecution.entity.Student;
 import ru.ob11to.methodexecution.mapper.StudentMapper;
 import ru.ob11to.methodexecution.repository.StudentRepository;
 

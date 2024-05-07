@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset adagridjan:1.create-table-student stripComments:false splitStatements:false runAlways:false runOnChange:true failOnError:true
+--changeset adagridjan:1.0.create-table-student stripComments:false splitStatements:false runAlways:false runOnChange:true failOnError:true
 CREATE TABLE IF NOT EXISTS student
 (
     id         BIGSERIAL PRIMARY KEY,
@@ -18,8 +18,8 @@ COMMENT ON COLUMN public.student.name IS 'Имя студента';
 COMMENT ON COLUMN public.student.address IS 'Адрес проживания студента';
 
 
---changeset adagridjan:2.create-table-execution_time_method stripComments:false splitStatements:false runAlways:false runOnChange:true failOnError:true
-CREATE TABLE execution_time_method
+--changeset adagridjan:1.0.create-table-execution_time_method stripComments:false splitStatements:false runAlways:false runOnChange:true failOnError:true
+CREATE TABLE IF NOT EXISTS execution_time_method
 (
     id          BIGSERIAL PRIMARY KEY,
     created_at  timestamp with time zone DEFAULT now() NOT NULL,
