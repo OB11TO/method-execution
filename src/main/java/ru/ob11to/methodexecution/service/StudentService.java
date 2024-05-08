@@ -57,10 +57,11 @@ public class StudentService {
     @Transactional
     public Optional<StudentReadDto> updateStudent(Long id, StudentCreateDto studentCreateDto) {
         log.info("Update student with id : {}, data : {}", id, studentCreateDto);
-        return studentRepository.findById(id)
-                .map(entity -> studentMapper.toEntity(studentCreateDto))
-                .map(studentRepository::saveAndFlush)
-                .map(studentMapper::toDto);
+        return studentRepository.findById(id).map(existingStudent -> {
+            existingStudent.setName(studentCreateDto.name());
+            existingStudent.setAddress(studentCreateDto.address());
+            return studentMapper.toDto(studentRepository.saveAndFlush(existingStudent));
+        });
     }
 
 
